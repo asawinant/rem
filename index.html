@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -274,7 +275,7 @@
   }
   .result-card-frame {
     border: 3px solid #000000;
-    padding: 36px 24px 28px;
+    padding: 36px 18px 28px;
     position: relative;
   }
   .result-card-frame::before, .result-card-frame::after,
@@ -336,9 +337,12 @@
     text-align: center;
     line-height: 1.4;
     margin-bottom: 14px;
-    padding: 0 8px;
+    padding: 0 4px;
+    text-wrap: balance;
+    -webkit-hyphens: none;
+    hyphens: none;
   }
-  .result-poem-line { font-size: 17px; margin: 0; }
+  .result-poem-line { font-size: 15px; margin: 0; line-height: 1.45; text-wrap: balance; }
   .result-poem-line .smell-word {
     font-style: normal;
     font-weight: 600;
@@ -460,6 +464,226 @@
   /* Fade transitions */
   .fade-in { animation: fadeIn 0.3s ease forwards; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== HIDDEN 9:16 EXPORT CONTAINER ===== */
+  /* Built off-screen at exact 1080x1920px for html2canvas to render */
+  #export-stage {
+    position: fixed;
+    top: -10000px;
+    left: -10000px;
+    width: 1080px;
+    height: 1920px;
+    background: #FFFFFF;
+    font-family: "Cormorant Garamond", serif;
+    color: #000000;
+    overflow: hidden;
+    pointer-events: none;
+    /* Safari needs visibility for html2canvas to read computed styles */
+    visibility: visible;
+    opacity: 1;
+  }
+  .export-card {
+    position: absolute;
+    top: 100px;
+    left: 60px;
+    right: 60px;
+    bottom: 180px;
+    background: #FFFFFF;
+    color: #000000;
+  }
+  .export-card-frame {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 6px solid #000000;
+    padding: 84px 80px;
+  }
+  .export-corner {
+    position: absolute;
+    width: 80px; height: 80px;
+    border: 6px solid #000000;
+    background: #FFFFFF;
+  }
+  .export-corner.tl { top: -40px; left: -40px; border-right: none; border-bottom: none; }
+  .export-corner.tr { top: -40px; right: -40px; border-left: none; border-bottom: none; }
+  .export-corner.bl { bottom: -40px; left: -40px; border-right: none; border-top: none; }
+  .export-corner.br { bottom: -40px; right: -40px; border-left: none; border-top: none; }
+
+  .export-band {
+    background: #000000;
+    color: #FFFFFF;
+    padding: 28px 0;
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .export-band-text {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 56px;
+    letter-spacing: 0.06em;
+  }
+
+  .export-icons-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 64px;
+    margin-bottom: 16px;
+  }
+  .export-icon { width: 64px; height: 64px; }
+
+  .export-emoji-stage {
+    position: relative;
+    height: 360px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+  .export-archetype-emoji {
+    font-size: 280px;
+    line-height: 1;
+  }
+  .export-sparkle {
+    position: absolute;
+    color: #000000;
+  }
+  .export-sparkle.s1 { top: 30px; left: 200px; font-size: 36px; }
+  .export-sparkle.s2 { top: 40px; right: 220px; font-size: 28px; }
+  .export-sparkle.s3 { bottom: 40px; left: 180px; font-size: 32px; }
+  .export-sparkle.s4 { bottom: 30px; right: 200px; font-size: 42px; }
+  .export-sparkle.s5 { top: 170px; left: 80px; font-size: 22px; }
+  .export-sparkle.s6 { top: 180px; right: 90px; font-size: 22px; }
+
+  .export-poem {
+    font-style: italic;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 26px;
+    padding: 0 60px;
+    text-wrap: balance;
+    -webkit-hyphens: none;
+    hyphens: none;
+  }
+  .export-poem-line { font-size: 32px; margin: 0; text-wrap: balance; }
+  .export-poem-line .smell-word {
+    font-style: normal;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: 4px;
+  }
+
+  .export-character {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 1.5;
+    text-align: center;
+    color: #555;
+    padding: 26px 80px;
+    margin: 0 0 26px;
+  }
+
+  .export-luck-stage {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 28px;
+  }
+  .export-luck-stamp {
+    border: 3px solid #000000;
+    padding: 16px 50px;
+    text-align: center;
+  }
+  .export-luck-label {
+    font-size: 20px;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+  .export-luck-number {
+    font-size: 46px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    padding-left: 0.25em;
+  }
+
+  .export-cta-zone {
+    border-top: 2px solid #000000;
+    padding-top: 36px;
+    text-align: center;
+  }
+  .export-cta-headline {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 50px;
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .export-cta-sub {
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.4;
+    margin-bottom: 24px;
+  }
+  .export-signoff {
+    border-top: 2px solid #000000;
+    padding-top: 24px;
+  }
+  .export-signoff-name {
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+    font-style: italic;
+  }
+  .export-signoff-meta {
+    font-size: 18px;
+    line-height: 1.5;
+    font-style: italic;
+    color: #444;
+  }
+
+  /* Bottom URL outside the card */
+  .export-url {
+    position: absolute;
+    bottom: 80px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-style: italic;
+    font-size: 28px;
+    letter-spacing: 0.06em;
+    color: #000000;
+  }
+
+  /* Saving overlay */
+  .saving-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    font-family: "Cormorant Garamond", serif;
+  }
+  .saving-text {
+    font-style: italic;
+    font-size: 24px;
+    color: #000;
+    margin-top: 16px;
+  }
+  .saving-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #DDD;
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -492,70 +716,70 @@
     captain: {
       name: 'The Captain', emoji: '🗝️',
       lines: [
-        "Eyes open. Pen down. Dream's on the clock.",
-        "You don't chase it — you make it walk.",
-        "Smell of {smell} where the morning brain wakes,",
-        "by Tuesday it's already a plan with a name."
+        "Eyes open. Pen down. Day's begun.",
+        "You don't chase it. You make it walk.",
+        "Smell of {smell} in your morning brain,",
+        "by Tuesday it's a plan with a name."
       ],
       character: 'You are like the friend who plans the trip, books the flights, and tells everyone what time to wake up.'
     },
     copilot: {
       name: 'The Co-Pilot', emoji: '🪐',
       lines: [
-        "Hand on the wheel, but easy on the grip.",
-        "You ride the curve, you read the lip.",
+        "Hand on the wheel, easy on the grip.",
+        "You ride the curve. You read the lip.",
         "Smell of {smell} in the slow lane breeze,",
-        "you don't force the route — you let it ease."
+        "you don't force the route. You let it ease."
       ],
       character: 'You are like the friend who shows up with a half-plan and a full bottle, and somehow the night turns out perfect.'
     },
     director: {
       name: 'The Director', emoji: '🎬',
       lines: [
-        "You don't enter the dream — you cast it.",
-        "Wide shot, close-up, you call where to last it.",
+        "You don't enter the dream. You cast it.",
+        "Wide shot. Close-up. You call the cut.",
         "Smell of {smell} in the cutting room air,",
-        "every scene gets a take, every take gets a stare."
+        "every scene a take. Every take a stare."
       ],
       character: "You are like the friend who watches the movie, then explains why the third act didn't work and why it could have."
     },
     negotiator: {
       name: 'The Negotiator', emoji: '🌗',
       lines: [
-        "The dream said go. You said let me think.",
-        "The dream blinked first. You poured a drink.",
+        "The dream said go. You said wait.",
+        "The dream blinked first. You stayed.",
         "Smell of {smell} at the round-table fight,",
-        "half the time you lose, half the time you're right."
+        "half the time wrong. Half the time right."
       ],
       character: 'You are like the friend who reads the menu twice, sends one dish back, and somehow makes the waiter laugh.'
     },
     lucid: {
       name: 'The Lucid One', emoji: '🔮',
       lines: [
-        "Mid-dream you blink and the rules go thin.",
+        "Mid-dream you blink. Rules go thin.",
         "You stay in the scene. You don't check in.",
-        "Smell of {smell} where the floor used to be,",
-        "you walk through the wall just to see what you see."
+        "Smell of {smell}. The floor's not there.",
+        "You walk the wall. You don't care."
       ],
       character: 'You are like the friend who notices the song change before anyone else, and remembers every word the next morning.'
     },
     mirror: {
       name: 'The Mirror', emoji: '🪞',
       lines: [
-        "The dream looks at you. You look back, slow.",
+        "The dream looks. You look back, slow.",
         "Neither one blinks. Neither one goes.",
         "Smell of {smell} where the question lives,",
-        "you don't take what the dream gives or doesn't give."
+        "you don't take what the dream gives."
       ],
       character: 'You are like the friend who listens longer than anyone, then says one sentence that everyone repeats for years.'
     },
     sleepwalker: {
       name: 'The Sleepwalker', emoji: '🌙',
       lines: [
-        "No map, no plan, no tap on the brake.",
-        "The dream took the wheel before you were awake.",
+        "No map. No plan. No hand on the brake.",
+        "The dream drove off before you woke.",
         "Smell of {smell} on a road you don't know,",
-        "but the door's the right door, so in you go."
+        "but the door's the right door. In you go."
       ],
       character: "You are like the friend who ends up at the best party in town and can't explain how they got there."
     },
@@ -563,19 +787,19 @@
       name: 'The Drifter', emoji: '🦋',
       lines: [
         "Dream on the left. You on the right.",
-        "Both of you walking toward the same light.",
-        "Smell of {smell} where the edges go soft,",
-        "you're never quite in, you're never quite off."
+        "Both walking toward the same light.",
+        "Smell of {smell}. The edges go soft.",
+        "Never quite in. Never quite off."
       ],
       character: "You are like the friend who shows up on the trip you didn't invite them to, and makes everyone glad they came."
     },
     watcher: {
       name: 'The Watcher', emoji: '👁️',
       lines: [
-        "Front row. No notes. Eyes wide as a stage.",
-        "The dream does its thing. You don't turn the page.",
+        "Front row. No notes. Eyes on the stage.",
+        "The dream plays. You don't turn the page.",
         "Smell of {smell} in a quiet room,",
-        "you don't need to act — you just need to look."
+        "you don't act. You just look."
       ],
       character: 'You are like the friend who notices what everyone else missed, and never feels the need to mention it.'
     }
@@ -791,32 +1015,142 @@
           '</div>' +
         '</div>' +
         '<div class="result-actions">' +
-          '<button class="btn-primary" id="share-btn">Share on Instagram</button>' +
+          '<button class="btn-primary" id="save-btn">Save your card</button>' +
           '<button class="btn-secondary" id="restart-btn">Try Again</button>' +
         '</div>' +
       '</div>';
 
-    document.getElementById('share-btn').addEventListener('click', function() {
-      // Try Web Share API first (mobile native share sheet)
-      var shareText = "I'm " + arch.name + " in the REM dream quiz by @asawinant.\nDiscover yours at asawinant.github.io/rem";
-      if (navigator.share) {
-        navigator.share({
-          title: 'REM · ' + arch.name,
-          text: shareText,
-          url: 'https://asawinant.github.io/rem/'
-        }).catch(function() {
-          // fall through if user cancels
-        });
-      } else {
-        // Fallback: open Instagram
-        window.open('https://www.instagram.com/asawinant/', '_blank');
-      }
+    document.getElementById('save-btn').addEventListener('click', function() {
+      saveCardAsImage(arch, smell, state.luck);
     });
 
     document.getElementById('restart-btn').addEventListener('click', function() {
       state = { step: 'intro', answers: [], sliderVal: 50, smell: '', luck: '' };
       renderIntro();
     });
+  }
+
+  // ===== SAVE CARD AS 9:16 PNG =====
+  // Builds a hidden 1080x1920 export stage, renders with html2canvas, downloads PNG.
+  function saveCardAsImage(arch, smell, luck) {
+    // Show saving overlay
+    var overlay = document.createElement('div');
+    overlay.className = 'saving-overlay';
+    overlay.innerHTML =
+      '<div class="saving-spinner"></div>' +
+      '<p class="saving-text">Saving your card...</p>';
+    document.body.appendChild(overlay);
+
+    // Build poem HTML for export
+    var poemHTML = arch.lines.map(function(line) {
+      var processed = line.replace('{smell}', '<span class="smell-word">' + smell + '</span>');
+      return '<p class="export-poem-line">' + processed + '</p>';
+    }).join('');
+
+    // Build hidden export stage
+    var stage = document.createElement('div');
+    stage.id = 'export-stage';
+    stage.innerHTML =
+      '<div class="export-card">' +
+        '<div class="export-card-frame">' +
+          '<div class="export-corner tl"></div>' +
+          '<div class="export-corner tr"></div>' +
+          '<div class="export-corner bl"></div>' +
+          '<div class="export-corner br"></div>' +
+          '<div class="export-band">' +
+            '<span class="export-band-text">' + arch.name + '</span>' +
+          '</div>' +
+          '<div class="export-icons-row">' +
+            '<svg class="export-icon" viewBox="0 0 32 32" fill="none" stroke="#000" stroke-width="1.5">' +
+              '<path d="M22 6 a10 10 0 1 0 4 18 a8 8 0 1 1 -4 -18 z" />' +
+            '</svg>' +
+            '<svg class="export-icon" viewBox="0 0 32 32" fill="none" stroke="#000" stroke-width="1.5">' +
+              '<path d="M6 8 L16 6 L26 8 L26 26 L16 24 L6 26 Z" />' +
+              '<line x1="16" y1="6" x2="16" y2="24" />' +
+              '<line x1="9" y1="12" x2="13" y2="11.5" />' +
+              '<line x1="9" y1="16" x2="13" y2="15.5" />' +
+              '<line x1="19" y1="11.5" x2="23" y2="12" />' +
+              '<line x1="19" y1="15.5" x2="23" y2="16" />' +
+            '</svg>' +
+          '</div>' +
+          '<div class="export-emoji-stage">' +
+            '<span class="export-sparkle s1">✦</span>' +
+            '<span class="export-sparkle s2">✧</span>' +
+            '<span class="export-sparkle s3">✧</span>' +
+            '<span class="export-sparkle s4">✦</span>' +
+            '<span class="export-sparkle s5">·</span>' +
+            '<span class="export-sparkle s6">·</span>' +
+            '<span class="export-archetype-emoji">' + arch.emoji + '</span>' +
+          '</div>' +
+          '<div class="export-poem">' + poemHTML + '</div>' +
+          '<p class="export-character">' + arch.character + '</p>' +
+          '<div class="export-luck-stage">' +
+            '<div class="export-luck-stamp">' +
+              '<p class="export-luck-label">My luck number</p>' +
+              '<p class="export-luck-number">' + luck + '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="export-cta-zone">' +
+            '<p class="export-cta-headline">Share your dream.</p>' +
+            '<p class="export-cta-sub">Tag @asawinant on Instagram.<br>Let your friends find theirs.</p>' +
+            '<div class="export-signoff">' +
+              '<p class="export-signoff-name">Asawin "Ant" Rojmethatawee</p>' +
+              '<p class="export-signoff-meta">Hotel Art Fair 2026 · Theme: REM<br>5 — 7 June 2026 · Kromo Bangkok</p>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="export-url">asawinant.github.io/rem</div>';
+
+    document.body.appendChild(stage);
+
+    // Wait for fonts and emoji to render
+    var capture = function() {
+      html2canvas(stage, {
+        width: 1080,
+        height: 1920,
+        scale: 1,
+        backgroundColor: '#FFFFFF',
+        useCORS: true,
+        allowTaint: false,
+        logging: false
+      }).then(function(canvas) {
+        canvas.toBlob(function(blob) {
+          // Trigger download
+          var slug = arch.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+          var filename = 'rem-' + slug + '-asawinant.png';
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = filename;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          // Cleanup
+          setTimeout(function() {
+            URL.revokeObjectURL(url);
+            if (stage.parentNode) stage.parentNode.removeChild(stage);
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+          }, 500);
+        }, 'image/png');
+      }).catch(function(err) {
+        console.error('Save failed:', err);
+        overlay.innerHTML = '<p class="saving-text">Save failed. Try again?</p>';
+        setTimeout(function() {
+          if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+          if (stage.parentNode) stage.parentNode.removeChild(stage);
+        }, 1500);
+      });
+    };
+
+    // Give the browser a moment to render the off-screen stage and load fonts
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function() {
+        setTimeout(capture, 300);
+      });
+    } else {
+      setTimeout(capture, 600);
+    }
   }
 
   // ===== INIT =====
