@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="theme-color" content="#FFFFFF" />
+<title>REM · Discover the 9 Dreamers · @asawinant</title>
+<meta name="description" content="A 60-second quiz about how you sleep, think, and let go. An artwork by Asawin Rojmethatawee for Hotel Art Fair 2026." />
+<meta property="og:title" content="REM · Discover the 9 Dreamers" />
+<meta property="og:description" content="Which one are you?" />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    background: #FFFFFF;
+    color: #000000;
+    font-family: "Cormorant Garamond", serif;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  #app {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100vh;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Frame for screens — same corner brackets as the card */
+  .screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 56px 0 40px;
+    position: relative;
+  }
+
+  /* Section: header */
+  .header-mark {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .header-title {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
+  }
+  .header-sub {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 16px;
+    color: #555;
+    margin-top: 8px;
+    line-height: 1.4;
+  }
+
+  /* Top band — used in some screens */
+  .top-band {
+    background: #000000;
+    color: #FFFFFF;
+    padding: 16px 0;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .top-band-text {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: 0.06em;
+  }
+
+  /* Hero emoji block (intro and result) */
+  .hero-stage {
+    position: relative;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    width: 100%;
+    max-width: 320px;
+  }
+  .hero-emoji {
+    font-size: 160px;
+    line-height: 1;
+    display: block;
+  }
+  .sparkle {
+    position: absolute;
+    color: #000000;
+  }
+  .sparkle.s1 { top: 10px; left: 30px; font-size: 22px; }
+  .sparkle.s2 { top: 20px; right: 30px; font-size: 18px; }
+  .sparkle.s3 { bottom: 20px; left: 30px; font-size: 18px; }
+  .sparkle.s4 { bottom: 10px; right: 30px; font-size: 22px; }
+  .sparkle.s5 { top: 90px; left: 0px; font-size: 14px; }
+  .sparkle.s6 { top: 90px; right: 0px; font-size: 14px; }
+
+  /* Question screen */
+  .question-emoji {
+    text-align: center;
+    font-size: 48px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    letter-spacing: 0.05em;
+  }
+  .question-prompt {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.3;
+    text-align: center;
+    margin-bottom: 32px;
+    padding: 0 8px;
+  }
+
+  /* Choice buttons — center aligned */
+  .choices {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .btn-choice {
+    background: #FFFFFF;
+    border: 2px solid #000000;
+    color: #000000;
+    padding: 18px 24px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  .btn-choice:active {
+    background: #000000;
+    color: #FFFFFF;
+  }
+
+  /* Slider question */
+  .slider-wrapper {
+    margin: 24px 0 36px;
+    padding: 0 8px;
+  }
+  .slider-track {
+    position: relative;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 16px;
+  }
+  .slider-input {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: #000000;
+    outline: none;
+    margin: 28px 0 0;
+    cursor: pointer;
+  }
+  .slider-input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 28px;
+    height: 28px;
+    background: #000000;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .slider-input::-moz-range-thumb {
+    width: 28px;
+    height: 28px;
+    background: #000000;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-style: italic;
+    font-size: 14px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #555;
+  }
+
+  /* Text input */
+  .text-input {
+    width: 100%;
+    padding: 18px 20px;
+    border: 2px solid #000000;
+    background: #FFFFFF;
+    color: #000000;
+    font-family: "Cormorant Garamond", serif;
+    font-style: italic;
+    font-size: 22px;
+    text-align: center;
+    -webkit-appearance: none;
+    appearance: none;
+    border-radius: 0;
+    margin-bottom: 24px;
+    outline: none;
+  }
+  .text-input::placeholder { color: #999; }
+
+  /* Primary button (Begin, Continue, etc.) — UPPERCASE per design system */
+  .btn-primary {
+    background: #000000;
+    border: none;
+    color: #FFFFFF;
+    padding: 18px 24px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: background 0.15s ease;
+  }
+  .btn-primary:active { background: #333333; }
+  .btn-primary:disabled { background: #999; cursor: not-allowed; }
+
+  /* Progress dots */
+  .progress {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #DDD;
+    transition: background 0.2s ease;
+  }
+  .dot.active { background: #000000; }
+
+  /* RESULT CARD — matches the printed Mirror card design exactly, scaled for mobile */
+  .result-card {
+    width: 100%;
+    background: #FFFFFF;
+    color: #000000;
+    position: relative;
+    margin: 0 auto 28px;
+    padding: 16px;
+  }
+  .result-card-frame {
+    border: 3px solid #000000;
+    padding: 36px 24px 28px;
+    position: relative;
+  }
+  .result-card-frame::before, .result-card-frame::after,
+  .result-corner-bl, .result-corner-br {
+    content: ''; position: absolute;
+    width: 28px; height: 28px;
+    border: 3px solid #000000;
+  }
+  .result-card-frame::before { top: -14px; left: -14px; border-right: none; border-bottom: none; background: #FFFFFF; }
+  .result-card-frame::after { top: -14px; right: -14px; border-left: none; border-bottom: none; background: #FFFFFF; }
+  .result-corner-bl { bottom: -14px; left: -14px; border-right: none; border-top: none; background: #FFFFFF; }
+  .result-corner-br { bottom: -14px; right: -14px; border-left: none; border-top: none; background: #FFFFFF; }
+
+  .result-band {
+    background: #000000;
+    color: #FFFFFF;
+    padding: 14px 0;
+    text-align: center;
+    margin: -20px -8px 20px;
+  }
+  .result-band-text {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 26px;
+    letter-spacing: 0.06em;
+  }
+
+  .result-icons {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 28px;
+    margin-bottom: 4px;
+  }
+  .result-icon-svg { width: 28px; height: 28px; }
+
+  .result-emoji-stage {
+    position: relative;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+  }
+  .result-archetype-emoji {
+    font-size: 130px;
+    line-height: 1;
+  }
+  .result-sparkle { position: absolute; color: #000000; }
+  .result-sparkle.s1 { top: 10px; left: 50px; font-size: 18px; }
+  .result-sparkle.s2 { top: 18px; right: 60px; font-size: 14px; }
+  .result-sparkle.s3 { bottom: 18px; left: 40px; font-size: 16px; }
+  .result-sparkle.s4 { bottom: 10px; right: 50px; font-size: 20px; }
+  .result-sparkle.s5 { top: 80px; left: 16px; font-size: 12px; }
+  .result-sparkle.s6 { top: 90px; right: 16px; font-size: 12px; }
+
+  .result-poem {
+    font-style: italic;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 14px;
+    padding: 0 8px;
+  }
+  .result-poem-line { font-size: 17px; margin: 0; }
+  .result-poem-line .smell-word {
+    font-style: normal;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-underline-offset: 3px;
+  }
+
+  .result-character {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    color: #555;
+    padding: 14px 12px;
+    margin-bottom: 16px;
+  }
+
+  .result-luck-stage {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 22px;
+  }
+  .result-luck-stamp {
+    border: 1.5px solid #000000;
+    padding: 10px 28px;
+    text-align: center;
+  }
+  .result-luck-label {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+    margin-bottom: 4px;
+    font-style: italic;
+  }
+  .result-luck-number {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    padding-left: 0.25em;
+  }
+
+  .result-cta-zone {
+    border-top: 1px solid #000000;
+    padding-top: 22px;
+    text-align: center;
+  }
+  .result-cta-headline {
+    font-style: italic;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .result-cta-sub {
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 18px;
+  }
+  .result-signoff {
+    border-top: 1px solid #000000;
+    padding-top: 16px;
+    margin-top: 8px;
+  }
+  .result-signoff-name {
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+    font-style: italic;
+  }
+  .result-signoff-meta {
+    font-size: 11px;
+    line-height: 1.5;
+    font-style: italic;
+    color: #444;
+  }
+
+  /* Result actions */
+  .result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid #000000;
+    color: #000000;
+    padding: 14px 20px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    transition: all 0.15s ease;
+  }
+  .btn-secondary:active {
+    background: #000000;
+    color: #FFFFFF;
+  }
+
+  /* Footer signature on intro */
+  .intro-footer {
+    margin-top: auto;
+    padding-top: 32px;
+    text-align: center;
+    font-style: italic;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+  }
+
+  /* Fade transitions */
+  .fade-in { animation: fadeIn 0.3s ease forwards; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+(function() {
+  var app = document.getElementById('app');
+  var state = {
+    step: 'intro',
+    answers: [],
+    sliderVal: 50,
+    smell: '',
+    luck: ''
+  };
+
+  // ===== QUESTIONS =====
+  // 4 binary + 1 slider + 1 text. Same logic as v1 quiz.
+  var QUESTIONS = [
+    { type: 'binary', emoji: '🌊  🌊  🌊  🚣', prompt: 'You see this. You...', a: 'Ride it', b: 'Steer it', aType: 'V', bType: 'C' },
+    { type: 'binary', emoji: '🚪  🚪  🚪  🚪', prompt: 'Four doors appear. You...', a: 'Open the nearest', b: 'Check behind each', aType: 'V', bType: 'C' },
+    { type: 'slider', emoji: '🦋  💭  ✨', prompt: 'A butterfly thought floats by.', leftLabel: 'Chase it', rightLabel: 'Plan it' },
+    { type: 'binary', emoji: '🌫️  🌫️  🛤️  🚶', prompt: 'Fog covers the path. You...', a: 'Walk into it', b: 'Wait for it to clear', aType: 'V', bType: 'C' },
+    { type: 'text', emoji: '🌙  ✏️  📓  💭', prompt: 'In one word — what do your dreams smell like?', placeholder: 'petrichor' }
+  ];
+
+  // ===== ARCHETYPES =====
+  var ARCHETYPES = {
+    captain: {
+      name: 'The Captain', emoji: '🗝️',
+      lines: [
+        "Eyes open. Pen down. Dream's on the clock.",
+        "You don't chase it — you make it walk.",
+        "Smell of {smell} where the morning brain wakes,",
+        "by Tuesday it's already a plan with a name."
+      ],
+      character: 'You are like the friend who plans the trip, books the flights, and tells everyone what time to wake up.'
+    },
+    copilot: {
+      name: 'The Co-Pilot', emoji: '🪐',
+      lines: [
+        "Hand on the wheel, but easy on the grip.",
+        "You ride the curve, you read the lip.",
+        "Smell of {smell} in the slow lane breeze,",
+        "you don't force the route — you let it ease."
+      ],
+      character: 'You are like the friend who shows up with a half-plan and a full bottle, and somehow the night turns out perfect.'
+    },
+    director: {
+      name: 'The Director', emoji: '🎬',
+      lines: [
+        "You don't enter the dream — you cast it.",
+        "Wide shot, close-up, you call where to last it.",
+        "Smell of {smell} in the cutting room air,",
+        "every scene gets a take, every take gets a stare."
+      ],
+      character: "You are like the friend who watches the movie, then explains why the third act didn't work and why it could have."
+    },
+    negotiator: {
+      name: 'The Negotiator', emoji: '🌗',
+      lines: [
+        "The dream said go. You said let me think.",
+        "The dream blinked first. You poured a drink.",
+        "Smell of {smell} at the round-table fight,",
+        "half the time you lose, half the time you're right."
+      ],
+      character: 'You are like the friend who reads the menu twice, sends one dish back, and somehow makes the waiter laugh.'
+    },
+    lucid: {
+      name: 'The Lucid One', emoji: '🔮',
+      lines: [
+        "Mid-dream you blink and the rules go thin.",
+        "You stay in the scene. You don't check in.",
+        "Smell of {smell} where the floor used to be,",
+        "you walk through the wall just to see what you see."
+      ],
+      character: 'You are like the friend who notices the song change before anyone else, and remembers every word the next morning.'
+    },
+    mirror: {
+      name: 'The Mirror', emoji: '🪞',
+      lines: [
+        "The dream looks at you. You look back, slow.",
+        "Neither one blinks. Neither one goes.",
+        "Smell of {smell} where the question lives,",
+        "you don't take what the dream gives or doesn't give."
+      ],
+      character: 'You are like the friend who listens longer than anyone, then says one sentence that everyone repeats for years.'
+    },
+    sleepwalker: {
+      name: 'The Sleepwalker', emoji: '🌙',
+      lines: [
+        "No map, no plan, no tap on the brake.",
+        "The dream took the wheel before you were awake.",
+        "Smell of {smell} on a road you don't know,",
+        "but the door's the right door, so in you go."
+      ],
+      character: "You are like the friend who ends up at the best party in town and can't explain how they got there."
+    },
+    drifter: {
+      name: 'The Drifter', emoji: '🦋',
+      lines: [
+        "Dream on the left. You on the right.",
+        "Both of you walking toward the same light.",
+        "Smell of {smell} where the edges go soft,",
+        "you're never quite in, you're never quite off."
+      ],
+      character: "You are like the friend who shows up on the trip you didn't invite them to, and makes everyone glad they came."
+    },
+    watcher: {
+      name: 'The Watcher', emoji: '👁️',
+      lines: [
+        "Front row. No notes. Eyes wide as a stage.",
+        "The dream does its thing. You don't turn the page.",
+        "Smell of {smell} in a quiet room,",
+        "you don't need to act — you just need to look."
+      ],
+      character: 'You are like the friend who notices what everyone else missed, and never feels the need to mention it.'
+    }
+  };
+
+  // ===== SCORING =====
+  // Control axis: V (vessel/let go) = 0, C (captain/control) = 1
+  // Perspective: slider value (0=chase/inside, 1=plan/outside)
+  // Smell first letter W/O/Q/Z = unlock The Mirror (Ant's reserved card)
+  function getResult() {
+    var control = 0;
+    for (var i = 0; i < state.answers.length; i++) {
+      var a = state.answers[i];
+      if (a === 'C') control += 1;
+      else if (typeof a === 'number') control += a;
+    }
+    var sliderAnswer = state.answers[2];
+    if (typeof sliderAnswer !== 'number') sliderAnswer = 0.5;
+    var perspective = sliderAnswer;
+    var firstLetter = state.smell.charAt(0).toLowerCase();
+    if (['w', 'o', 'q', 'z'].indexOf(firstLetter) !== -1) {
+      return ARCHETYPES.mirror;
+    }
+    if (control >= 3.5) {
+      if (perspective < 0.4) return ARCHETYPES.captain;
+      if (perspective < 0.7) return ARCHETYPES.copilot;
+      return ARCHETYPES.director;
+    }
+    if (control >= 1.5) {
+      if (perspective < 0.4) return ARCHETYPES.negotiator;
+      if (perspective < 0.7) return ARCHETYPES.lucid;
+      return ARCHETYPES.mirror;
+    }
+    if (perspective < 0.4) return ARCHETYPES.sleepwalker;
+    if (perspective < 0.7) return ARCHETYPES.drifter;
+    return ARCHETYPES.watcher;
+  }
+
+  function generateLuckNumber(arch) {
+    if (arch.name === 'The Mirror') return '9 9 1 1';
+    var n = [];
+    for (var i = 0; i < 4; i++) n.push(Math.floor(Math.random() * 10));
+    return n.join(' ');
+  }
+
+  // ===== RENDER FUNCTIONS =====
+  function buildPoemHTML(arch, smell) {
+    return arch.lines.map(function(line) {
+      var processed = line.replace('{smell}', '<span class="smell-word">' + smell + '</span>');
+      return '<p class="result-poem-line">' + processed + '</p>';
+    }).join('');
+  }
+
+  function renderIntro() {
+    app.innerHTML =
+      '<div class="screen fade-in">' +
+        '<div class="header-mark">' +
+          '<p class="header-title">REM</p>' +
+          '<p class="header-sub">A 60-second dream questionnaire.<br>Discover one of nine dreamers.</p>' +
+        '</div>' +
+        '<div class="hero-stage">' +
+          '<span class="sparkle s1">✦</span>' +
+          '<span class="sparkle s2">✧</span>' +
+          '<span class="sparkle s3">✧</span>' +
+          '<span class="sparkle s4">✦</span>' +
+          '<span class="sparkle s5">·</span>' +
+          '<span class="sparkle s6">·</span>' +
+          '<span class="hero-emoji">🌙</span>' +
+        '</div>' +
+        '<button class="btn-primary" id="begin-btn">Begin</button>' +
+        '<div class="intro-footer">' +
+          '<p>An artwork by Asawin "Ant" Rojmethatawee</p>' +
+          '<p>Hotel Art Fair 2026 · Theme: REM</p>' +
+        '</div>' +
+      '</div>';
+    document.getElementById('begin-btn').addEventListener('click', function() {
+      state.step = 'q0';
+      renderQuestion(0);
+    });
+  }
+
+  function renderProgress(qIdx) {
+    var html = '<div class="progress">';
+    for (var i = 0; i < QUESTIONS.length; i++) {
+      html += '<span class="dot' + (i <= qIdx ? ' active' : '') + '"></span>';
+    }
+    html += '</div>';
+    return html;
+  }
+
+  function renderQuestion(qIdx) {
+    var q = QUESTIONS[qIdx];
+    var html = '<div class="screen fade-in">';
+    html += renderProgress(qIdx);
+    html += '<div class="question-emoji">' + q.emoji + '</div>';
+    html += '<p class="question-prompt">' + q.prompt + '</p>';
+
+    if (q.type === 'binary') {
+      html += '<div class="choices">';
+      html += '<button class="btn-choice" data-val="' + q.aType + '">' + q.a + '</button>';
+      html += '<button class="btn-choice" data-val="' + q.bType + '">' + q.b + '</button>';
+      html += '</div>';
+    } else if (q.type === 'slider') {
+      html += '<div class="slider-wrapper">';
+      html += '<input type="range" min="0" max="100" value="50" class="slider-input" id="slider-input">';
+      html += '<div class="slider-labels"><span>' + q.leftLabel + '</span><span>' + q.rightLabel + '</span></div>';
+      html += '</div>';
+      html += '<button class="btn-primary" id="slider-continue">Continue</button>';
+    } else if (q.type === 'text') {
+      html += '<input type="text" class="text-input" id="smell-input" placeholder="' + q.placeholder + '" maxlength="20" autocomplete="off" autocapitalize="none" />';
+      html += '<button class="btn-primary" id="text-continue">Continue</button>';
+    }
+
+    html += '</div>';
+    app.innerHTML = html;
+
+    if (q.type === 'binary') {
+      var btns = document.querySelectorAll('.btn-choice');
+      btns.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          state.answers[qIdx] = btn.getAttribute('data-val');
+          if (qIdx + 1 < QUESTIONS.length) {
+            renderQuestion(qIdx + 1);
+          } else {
+            renderResult();
+          }
+        });
+      });
+    } else if (q.type === 'slider') {
+      document.getElementById('slider-continue').addEventListener('click', function() {
+        var val = parseInt(document.getElementById('slider-input').value, 10);
+        state.answers[qIdx] = val / 100;
+        if (qIdx + 1 < QUESTIONS.length) {
+          renderQuestion(qIdx + 1);
+        } else {
+          renderResult();
+        }
+      });
+    } else if (q.type === 'text') {
+      var input = document.getElementById('smell-input');
+      input.focus();
+      document.getElementById('text-continue').addEventListener('click', function() {
+        var val = (input.value.trim() || "something you can't name").toLowerCase();
+        state.smell = val;
+        state.answers[qIdx] = val;
+        renderResult();
+      });
+      input.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          document.getElementById('text-continue').click();
+        }
+      });
+    }
+  }
+
+  function renderResult() {
+    var arch = getResult();
+    var smell = state.smell;
+    state.luck = generateLuckNumber(arch);
+
+    var poemHTML = buildPoemHTML(arch, smell);
+
+    app.innerHTML =
+      '<div class="screen fade-in">' +
+        '<div class="header-mark" style="margin-bottom: 16px;">' +
+          '<p class="header-title" style="font-size: 22px;">You are...</p>' +
+        '</div>' +
+        '<div class="result-card" id="result-card">' +
+          '<div class="result-card-frame">' +
+            '<div class="result-corner-bl"></div>' +
+            '<div class="result-corner-br"></div>' +
+            '<div class="result-band">' +
+              '<span class="result-band-text">' + arch.name + '</span>' +
+            '</div>' +
+            '<div class="result-icons">' +
+              '<svg class="result-icon-svg" viewBox="0 0 32 32" fill="none" stroke="#000" stroke-width="1.5">' +
+                '<path d="M22 6 a10 10 0 1 0 4 18 a8 8 0 1 1 -4 -18 z" />' +
+              '</svg>' +
+              '<svg class="result-icon-svg" viewBox="0 0 32 32" fill="none" stroke="#000" stroke-width="1.5">' +
+                '<path d="M6 8 L16 6 L26 8 L26 26 L16 24 L6 26 Z" />' +
+                '<line x1="16" y1="6" x2="16" y2="24" />' +
+                '<line x1="9" y1="12" x2="13" y2="11.5" />' +
+                '<line x1="9" y1="16" x2="13" y2="15.5" />' +
+                '<line x1="19" y1="11.5" x2="23" y2="12" />' +
+                '<line x1="19" y1="15.5" x2="23" y2="16" />' +
+              '</svg>' +
+            '</div>' +
+            '<div class="result-emoji-stage">' +
+              '<span class="result-sparkle s1">✦</span>' +
+              '<span class="result-sparkle s2">✧</span>' +
+              '<span class="result-sparkle s3">✧</span>' +
+              '<span class="result-sparkle s4">✦</span>' +
+              '<span class="result-sparkle s5">·</span>' +
+              '<span class="result-sparkle s6">·</span>' +
+              '<span class="result-archetype-emoji">' + arch.emoji + '</span>' +
+            '</div>' +
+            '<div class="result-poem">' + poemHTML + '</div>' +
+            '<p class="result-character">' + arch.character + '</p>' +
+            '<div class="result-luck-stage">' +
+              '<div class="result-luck-stamp">' +
+                '<p class="result-luck-label">My luck number</p>' +
+                '<p class="result-luck-number">' + state.luck + '</p>' +
+              '</div>' +
+            '</div>' +
+            '<div class="result-cta-zone">' +
+              '<p class="result-cta-headline">Share your dream.</p>' +
+              '<p class="result-cta-sub">Tag @asawinant on Instagram.<br>Let your friends find theirs.</p>' +
+              '<div class="result-signoff">' +
+                '<p class="result-signoff-name">Asawin "Ant" Rojmethatawee</p>' +
+                '<p class="result-signoff-meta">Hotel Art Fair 2026 · Theme: REM<br>5 — 7 June 2026 · Kromo Bangkok</p>' +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="result-actions">' +
+          '<button class="btn-primary" id="share-btn">Share on Instagram</button>' +
+          '<button class="btn-secondary" id="restart-btn">Try Again</button>' +
+        '</div>' +
+      '</div>';
+
+    document.getElementById('share-btn').addEventListener('click', function() {
+      // Try Web Share API first (mobile native share sheet)
+      var shareText = "I'm " + arch.name + " in the REM dream quiz by @asawinant.\nDiscover yours at asawinant.github.io/rem";
+      if (navigator.share) {
+        navigator.share({
+          title: 'REM · ' + arch.name,
+          text: shareText,
+          url: 'https://asawinant.github.io/rem/'
+        }).catch(function() {
+          // fall through if user cancels
+        });
+      } else {
+        // Fallback: open Instagram
+        window.open('https://www.instagram.com/asawinant/', '_blank');
+      }
+    });
+
+    document.getElementById('restart-btn').addEventListener('click', function() {
+      state = { step: 'intro', answers: [], sliderVal: 50, smell: '', luck: '' };
+      renderIntro();
+    });
+  }
+
+  // ===== INIT =====
+  renderIntro();
+})();
+</script>
+
+</body>
+</html>
